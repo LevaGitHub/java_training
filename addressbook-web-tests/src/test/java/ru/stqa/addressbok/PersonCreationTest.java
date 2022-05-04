@@ -2,7 +2,6 @@ package ru.stqa.addressbok;
 
 import java.util.concurrent.TimeUnit;
 import org.testng.annotations.*;
-import static org.testng.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -29,29 +28,51 @@ public class PersonCreationTest {
     }
 
     @Test
-    public void testUntitledTestCase() throws Exception {
-        wd.findElement(By.linkText("add new")).click();
+    public void testPersonCreation() throws Exception {
+        initPersonCreation();
+        fillPersonData(new PersonData(
+                "FirstName",
+                "MiddleName",
+                "LastName",
+                "Address",
+                "12345789",
+                "test@test.test"));
+        submitPersonCreation();
+        goToPersonHomePage();
+    }
+
+    private void goToPersonHomePage() {
+        wd.findElement(By.xpath("//div[@id='header']/a")).click();
+    }
+
+    private void submitPersonCreation() {
+        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    }
+
+    private void fillPersonData(PersonData personData) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys("FirstName");
+        wd.findElement(By.name("firstname")).sendKeys(personData.getFirstName());
         wd.findElement(By.name("middlename")).click();
         wd.findElement(By.name("middlename")).clear();
-        wd.findElement(By.name("middlename")).sendKeys("MiddleName");
+        wd.findElement(By.name("middlename")).sendKeys(personData.getMiddleName());
         wd.findElement(By.name("lastname")).click();
         wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys("LastName");
+        wd.findElement(By.name("lastname")).sendKeys(personData.getLastName());
         wd.findElement(By.name("nickname")).click();
         wd.findElement(By.name("address")).click();
         wd.findElement(By.name("address")).clear();
-        wd.findElement(By.name("address")).sendKeys("Address");
+        wd.findElement(By.name("address")).sendKeys(personData.getAddress());
         wd.findElement(By.name("home")).click();
         wd.findElement(By.name("home")).clear();
-        wd.findElement(By.name("home")).sendKeys("12345789");
+        wd.findElement(By.name("home")).sendKeys(personData.getPhone());
         wd.findElement(By.name("email")).click();
         wd.findElement(By.name("email")).clear();
-        wd.findElement(By.name("email")).sendKeys("test@test.test");
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-        wd.findElement(By.xpath("//div[@id='header']/a")).click();
+        wd.findElement(By.name("email")).sendKeys(personData.getMail());
+    }
+
+    private void initPersonCreation() {
+        wd.findElement(By.linkText("add new")).click();
     }
 
     private void logout() {
