@@ -10,6 +10,7 @@ public class ApplicationManager {
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private PersonHelper personHelper;
 
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\Windows\\System32\\chromedriver.exe");
@@ -19,6 +20,7 @@ public class ApplicationManager {
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
+        personHelper = new PersonHelper(wd);
         sessionHelper.login("admin", "secret");
     }
 
@@ -33,6 +35,10 @@ public class ApplicationManager {
 
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
+    }
+
+    public PersonHelper getPersonHelper() {
+        return personHelper;
     }
 
 }
