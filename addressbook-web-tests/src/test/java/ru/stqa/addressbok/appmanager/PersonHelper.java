@@ -40,4 +40,13 @@ public class PersonHelper extends HelperBase {
     public void confirmDeletePerson() {
         wd.switchTo().alert().accept();
     }
+
+    public void initPersonModification(int personId) {
+        click(By.xpath("//table[@id='maintable']/tbody/tr["+ Integer.toString(personId) +"]/td[8]/a/img"
+        ));
+    }
+
+    public void submitPersonModification() {
+        click(By.xpath("//div[@id='content']/form/input[22]"));
+    }
 }
