@@ -28,9 +28,8 @@ public class PersonHelper extends HelperBase {
     }
 
     public void selectPerson(int personId) {
-        // TODO: Переделать на рандом и поиск по родительской таблице "entry"
-        //Object rows = wd.findElement(By.name("entry"));
-        click(By.id(Integer.toString(personId)));
+        click(By.xpath("//input[@name='selected[]' and @type='checkbox']"));
+//        click(By.id(Integer.toString(personId)));
     }
 
     public void deleteSelectedPerson() {
