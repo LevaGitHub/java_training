@@ -1,5 +1,6 @@
 package ru.stqa.addressbok.appmanager;
 
+import com.sun.org.apache.xpath.internal.objects.XObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.addressbok.model.PersonData;
@@ -24,5 +25,19 @@ public class PersonHelper extends HelperBase {
 
     public void initPersonCreation() {
         click(By.linkText("add new"));
+    }
+
+    public void selectPerson(int personId) {
+        // TODO: Переделать на рандом и поиск по родительской таблице "entry"
+        //Object rows = wd.findElement(By.name("entry"));
+        click(By.id(Integer.toString(personId)));
+    }
+
+    public void deleteSelectedPerson() {
+        click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void confirmDeletePerson() {
+        wd.switchTo().alert().accept();
     }
 }
