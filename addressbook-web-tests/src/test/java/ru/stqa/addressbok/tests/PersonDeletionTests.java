@@ -7,7 +7,7 @@ public class PersonDeletionTests extends TestBase{
     @Test
     public void testPersonDeletion(){
         app.getNavigationHelper().goToPersonHomePage();
-        app.getPersonHelper().selectPerson(2);
+        app.getPersonHelper().selectPerson();
         app.getPersonHelper().deleteSelectedPerson();
         app.getPersonHelper().confirmDeletePerson();
     }

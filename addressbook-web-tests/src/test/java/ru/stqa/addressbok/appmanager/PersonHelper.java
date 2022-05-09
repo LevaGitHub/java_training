@@ -27,9 +27,8 @@ public class PersonHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectPerson(int personId) {
+    public void selectPerson() {
         click(By.xpath("//input[@name='selected[]' and @type='checkbox']"));
-//        click(By.id(Integer.toString(personId)));
     }
 
     public void deleteSelectedPerson() {
