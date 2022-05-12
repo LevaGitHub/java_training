@@ -1,6 +1,5 @@
 package ru.stqa.addressbok.appmanager;
 
-import com.sun.org.apache.xpath.internal.objects.XObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.addressbok.model.PersonData;
@@ -39,12 +38,25 @@ public class PersonHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initPersonModification(int personId) {
-        click(By.xpath("//table[@id='maintable']/tbody/tr["+ Integer.toString(personId) +"]/td[8]/a/img"
-        ));
+    public void initPersonModification(String personId) {
+        click((By.xpath("//a[contains(@href,'edit.php?id=" + personId + "')]")));
     }
 
     public void submitPersonModification() {
         click(By.xpath("//div[@id='content']/form/input[22]"));
+    }
+
+    public void createPerson(PersonData person) {
+        initPersonCreation();
+        fillPersonData(person);
+        submitPersonCreation();
+    }
+
+    public boolean isThereAPerson() {
+        return isElementPresent(By.xpath("//input[@name='selected[]' and @type='checkbox']"));
+    }
+
+    public String getPersonStringId() {
+        return wd.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("id");
     }
 }
