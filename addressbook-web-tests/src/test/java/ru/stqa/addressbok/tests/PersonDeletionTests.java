@@ -1,8 +1,10 @@
 package ru.stqa.addressbok.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.*;
-import ru.stqa.addressbok.model.GroupData;
 import ru.stqa.addressbok.model.PersonData;
+
+import java.util.List;
 
 public class PersonDeletionTests extends TestBase{
 
@@ -19,8 +21,15 @@ public class PersonDeletionTests extends TestBase{
                     "test@test.test"));
             app.getNavigationHelper().goToPersonHomePage();
         }
-        app.getPersonHelper().selectPerson();
+        List<PersonData> before = app.getPersonHelper().getPersonList();
+        app.getPersonHelper().selectPerson(before.size()-1);
         app.getPersonHelper().deleteSelectedPerson();
         app.getPersonHelper().confirmDeletePerson();
+        app.getNavigationHelper().goToPersonHomePage();
+        List<PersonData> after = app.getPersonHelper().getPersonList();
+        Assert.assertEquals(after.size(), before.size() -1);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 }
