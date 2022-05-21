@@ -23,14 +23,16 @@ public class PersonModificationTests extends TestBase {
         }
         List<PersonData> before = app.getPersonHelper().getPersonList();
         app.getPersonHelper().selectPerson(before.size()-1);
-        app.getPersonHelper().initPersonModification(String.valueOf(before.get(before.size() - 1).getId()));
+        String modification_person_id = String.valueOf(before.get(before.size() - 1).getId());
+        app.getPersonHelper().initPersonModification(modification_person_id);
         PersonData person = new PersonData(
-            "FirstNameM",
-            "MiddleNameM",
-            "LastNameM",
-            "AddressM",
-            "123457890",
-            "test@test.testM"
+                Integer.parseInt(modification_person_id),
+                "FirstNameM",
+                "MiddleNameM",
+                "LastNameM",
+                "AddressM",
+                "123457890",
+                "test@test.testM"
         );
         app.getPersonHelper().fillPersonData(person);
         app.getPersonHelper().submitPersonModification();

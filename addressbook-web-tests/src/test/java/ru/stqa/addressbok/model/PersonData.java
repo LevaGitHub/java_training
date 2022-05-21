@@ -9,7 +9,29 @@ public class PersonData {
     private final String phone;
     private final String mail;
 
-    public PersonData(int id, String lastName, String firstName) {
+    public PersonData(
+            int id,
+            String lastName,
+            String middleName,
+            String firstName,
+            String address,
+            String phone,
+            String mail) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.mail = mail;
+    }
+
+    public PersonData(
+            int id,
+            String lastName,
+            String firstName) {
+
         this.id = id;
         this.firstName = firstName;
         this.middleName = null;
