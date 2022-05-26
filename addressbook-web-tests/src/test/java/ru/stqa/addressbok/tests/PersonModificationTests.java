@@ -5,15 +5,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.addressbok.model.PersonData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class PersonModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
         app.goTo().homePage();
-        if (! app.person().isThereAPerson()){
+        if (app.person().all().size() == 0){
             app.person().createPerson(new PersonData()
                     .withFirstName("FirstName")
                     .withMiddleName("MiddleName")
@@ -27,28 +26,23 @@ public class PersonModificationTests extends TestBase {
 
     @Test
     public void testPersonModification(){
-        List<PersonData> before = app.person().list();
-        int index = before.size()-1;
-
-        app.person().select(index);
-        String modificationPersonId = String.valueOf(before.get(index).getId());
+        Set<PersonData> before = app.person().all();
+        PersonData modifiedPerson = before.iterator().next();
+        app.person().selectById(modifiedPerson.getId());
         PersonData person = new PersonData()
-                .withId(Integer.parseInt(modificationPersonId))
+                .withId(modifiedPerson.getId())
                 .withFirstName("FirstNameM")
                 .withMiddleName("MiddleNameM")
                 .withLastName("LastNameM")
                 .withAddress("AddressM")
                 .withPhone("123457890")
                 .withMail("test@test.testM");
-        app.person().modify(modificationPersonId, person);
+        app.person().modify(person);
         app.goTo().homePage();
-        List<PersonData> after = app.person().list();
+        Set<PersonData> after = app.person().all();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(index);
+        before.remove(modifiedPerson);
         before.add(person);
-        Comparator<? super PersonData> byId = (p1, p2) -> Integer.compare(p1.getId(), p2.getId());
-        before.sort(byId);
-        after.sort(byId);
         Assert.assertEquals(before, after);
     }
 

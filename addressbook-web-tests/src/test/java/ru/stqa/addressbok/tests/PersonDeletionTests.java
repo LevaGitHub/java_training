@@ -4,14 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.addressbok.model.PersonData;
 
-import java.util.List;
+import java.util.Set;
 
 public class PersonDeletionTests extends TestBase{
 
     @BeforeMethod
     public void ensurePreconditions(){
         app.goTo().homePage();
-        if (app.person().list().size() == 0){
+        if (app.person().all().size() == 0){
             app.person().createPerson(new PersonData()
                     .withFirstName("FirstName")
                     .withMiddleName("MiddleName")
@@ -25,16 +25,15 @@ public class PersonDeletionTests extends TestBase{
 
     @Test
     public void testPersonDeletion(){
-        List<PersonData> before = app.person().list();
-        int index = before.size()-1;
-        app.person().delete(index);
+        Set<PersonData> before = app.person().all();
+        PersonData deletedPerson = before.iterator().next();
+        app.person().delete(deletedPerson);
         app.goTo().homePage();
-        List<PersonData> after = app.person().list();
+        Set<PersonData> after = app.person().all();
         Assert.assertEquals(after.size(), before.size() -1);
 
-        before.remove(index);
+        before.remove(deletedPerson);
         Assert.assertEquals(before, after);
     }
-
 
 }

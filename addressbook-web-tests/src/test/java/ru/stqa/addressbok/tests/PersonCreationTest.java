@@ -3,16 +3,14 @@ package ru.stqa.addressbok.tests;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.addressbok.model.PersonData;
-
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class PersonCreationTest extends TestBase{
 
     @Test
     public void testPersonCreation() throws Exception {
         app.goTo().homePage();
-        List<PersonData> before = app.person().list();
+        Set<PersonData> before = app.person().all();
         PersonData person = new PersonData()
                 .withFirstName("FirstName")
                 .withMiddleName("MiddleName")
@@ -22,13 +20,10 @@ public class PersonCreationTest extends TestBase{
                 .withMail("test@test.test");
         app.person().createPerson(person);
         app.goTo().homePage();
-        List<PersonData> after = app.person().list();
+        Set<PersonData> after = app.person().all();
         Assert.assertEquals(after.size(), before.size() + 1);
-
+        person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
         before.add(person);
-        Comparator<? super PersonData> byId = (p1, p2) -> Integer.compare(p1.getId(), p2.getId());
-        before.sort(byId);
-        after.sort(byId);
         Assert.assertEquals(before, after);
     }
 

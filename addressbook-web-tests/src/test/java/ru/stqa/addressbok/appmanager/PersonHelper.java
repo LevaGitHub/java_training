@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.addressbok.model.PersonData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PersonHelper extends HelperBase {
 
@@ -30,9 +31,10 @@ public class PersonHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void select(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
+    public void selectById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+ id +"']")).click();
+        }
+
 
     public void deleteSelectedPerson() {
         click(By.xpath("//input[@value='Delete']"));
@@ -56,15 +58,15 @@ public class PersonHelper extends HelperBase {
         submitPersonCreation();
     }
 
-    public void modify(String modification_person_id, PersonData person) {
-        initPersonModification(modification_person_id);
+    public void modify(PersonData person) {
+        initPersonModification(String.valueOf(person.getId()));
         fillPersonData(person);
         submitPersonModification();
 
     }
 
-    public void delete(int index) {
-        select(index);
+    public void delete(PersonData person) {
+        selectById(person.getId());
         deleteSelectedPerson();
         confirmDeletePerson();
     }
@@ -77,8 +79,9 @@ public class PersonHelper extends HelperBase {
         return wd.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("id");
     }
 
-    public List<PersonData> list() {
-        List<PersonData> persons = new ArrayList<PersonData>();
+
+    public Set<PersonData> all() {
+        Set<PersonData> persons = new HashSet<PersonData>();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
 
         for (WebElement element: elements){
