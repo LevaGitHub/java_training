@@ -1,54 +1,17 @@
 package ru.stqa.addressbok.model;
 
 public class PersonData {
-    private int id;
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
-    private final String address;
-    private final String phone;
-    private final String mail;
 
-    public PersonData(
-            int id,
-            String lastName,
-            String middleName,
-            String firstName,
-            String address,
-            String phone,
-            String mail) {
+    private int id=Integer.MAX_VALUE;;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String address;
+    private String phone;
+    private String mail;
 
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.mail = mail;
-    }
-
-    public PersonData(
-            int id,
-            String lastName,
-            String firstName) {
-
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = null;
-        this.lastName = lastName;
-        this.address = null;
-        this.phone = null;
-        this.mail = null;
-    }
-
-    public PersonData(String firstName, String middleName, String lastName, String address, String phone, String mail) {
-        this.id = Integer.MAX_VALUE;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.mail = mail;
+    public int getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -75,13 +38,41 @@ public class PersonData {
         return mail;
     }
 
-    public void setId(int id) {
+    public PersonData withId(int id) {
         this.id = id;
+        return this;
     }
 
-    public int getId() {
-        return id;
+    public PersonData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
+
+    public PersonData withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return this;
+    }
+
+    public PersonData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public PersonData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public PersonData withPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public PersonData withMail(String mail) {
+        this.mail = mail;
+        return this;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -11,18 +11,18 @@ public class PersonCreationTest extends TestBase{
 
     @Test
     public void testPersonCreation() throws Exception {
-        app.getNavigationHelper().goToPersonHomePage();
-        List<PersonData> before = app.getPersonHelper().getPersonList();
-        PersonData person = new PersonData(
-                "FirstName",
-                "MiddleName",
-                "LastName",
-                "Address",
-                "12345789",
-                "test@test.test");
-        app.getPersonHelper().createPerson(person);
-        app.getNavigationHelper().goToPersonHomePage();
-        List<PersonData> after = app.getPersonHelper().getPersonList();
+        app.goTo().homePage();
+        List<PersonData> before = app.person().list();
+        PersonData person = new PersonData()
+                .withFirstName("FirstName")
+                .withMiddleName("MiddleName")
+                .withLastName("LastName")
+                .withAddress("Address")
+                .withPhone("12345789")
+                .withMail("test@test.test");
+        app.person().createPerson(person);
+        app.goTo().homePage();
+        List<PersonData> after = app.person().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(person);

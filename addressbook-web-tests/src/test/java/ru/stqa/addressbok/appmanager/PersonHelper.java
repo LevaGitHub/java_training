@@ -30,7 +30,7 @@ public class PersonHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectPerson(int index) {
+    public void select(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
@@ -56,6 +56,19 @@ public class PersonHelper extends HelperBase {
         submitPersonCreation();
     }
 
+    public void modify(String modification_person_id, PersonData person) {
+        initPersonModification(modification_person_id);
+        fillPersonData(person);
+        submitPersonModification();
+
+    }
+
+    public void delete(int index) {
+        select(index);
+        deleteSelectedPerson();
+        confirmDeletePerson();
+    }
+
     public boolean isThereAPerson() {
         return isElementPresent(By.xpath("//input[@name='selected[]' and @type='checkbox']"));
     }
@@ -64,18 +77,15 @@ public class PersonHelper extends HelperBase {
         return wd.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("id");
     }
 
-    public List<PersonData> getPersonList() {
+    public List<PersonData> list() {
         List<PersonData> persons = new ArrayList<PersonData>();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
 
         for (WebElement element: elements){
-//            int id = Integer.parseInt(element.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("value"));
-
-//            int id = Integer.parseInt(element.findElement(By.cssSelector("td")).get(0).findElement(By.tagName("input")).getText());
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastName = element.findElements(By.cssSelector("td")).get(1).getText();
             String firstName = element.findElements(By.cssSelector("td")).get(2).getText();
-            PersonData person = new PersonData(id, lastName, firstName);
+            PersonData person = new PersonData().withId(id).withLastName(lastName).withFirstName(firstName);
             persons.add(person);
         }
         return persons;
