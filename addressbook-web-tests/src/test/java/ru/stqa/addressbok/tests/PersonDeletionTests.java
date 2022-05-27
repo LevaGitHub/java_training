@@ -1,10 +1,16 @@
 package ru.stqa.addressbok.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.addressbok.model.PersonData;
+import ru.stqa.addressbok.model.Persons;
 
 import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.*;
 
 public class PersonDeletionTests extends TestBase{
 
@@ -25,15 +31,15 @@ public class PersonDeletionTests extends TestBase{
 
     @Test
     public void testPersonDeletion(){
-        Set<PersonData> before = app.person().all();
+        Persons before = app.person().all();
         PersonData deletedPerson = before.iterator().next();
         app.person().delete(deletedPerson);
         app.goTo().homePage();
-        Set<PersonData> after = app.person().all();
-        Assert.assertEquals(after.size(), before.size() -1);
-
-        before.remove(deletedPerson);
-        Assert.assertEquals(before, after);
+        Persons after = app.person().all();
+        assertEquals(after.size(), before.size() -1);
+        assertThat(after, CoreMatchers.equalTo(before.withOut(deletedPerson)));
+//        before.remove(deletedPerson);
+//        assertEquals(before, after);
     }
 
 }

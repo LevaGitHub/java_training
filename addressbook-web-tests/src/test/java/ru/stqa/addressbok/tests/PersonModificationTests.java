@@ -1,11 +1,19 @@
 package ru.stqa.addressbok.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.addressbok.model.PersonData;
+import ru.stqa.addressbok.model.Persons;
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PersonModificationTests extends TestBase {
 
@@ -26,7 +34,7 @@ public class PersonModificationTests extends TestBase {
 
     @Test
     public void testPersonModification(){
-        Set<PersonData> before = app.person().all();
+        Persons before = app.person().all();
         PersonData modifiedPerson = before.iterator().next();
         app.person().selectById(modifiedPerson.getId());
         PersonData person = new PersonData()
@@ -39,11 +47,12 @@ public class PersonModificationTests extends TestBase {
                 .withMail("test@test.testM");
         app.person().modify(person);
         app.goTo().homePage();
-        Set<PersonData> after = app.person().all();
+        Persons after = app.person().all();
         Assert.assertEquals(after.size(), before.size());
-        before.remove(modifiedPerson);
-        before.add(person);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before.withOut(modifiedPerson).withAdded(person)));
+//        before.remove(modifiedPerson);
+//        before.add(person);
+//        Assert.assertEquals(before, after);
     }
 
 }

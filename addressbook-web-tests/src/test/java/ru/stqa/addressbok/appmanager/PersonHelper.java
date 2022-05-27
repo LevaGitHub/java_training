@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.addressbok.model.PersonData;
+import ru.stqa.addressbok.model.Persons;
 
 import java.util.HashSet;
 import java.util.List;
@@ -80,8 +81,8 @@ public class PersonHelper extends HelperBase {
     }
 
 
-    public Set<PersonData> all() {
-        Set<PersonData> persons = new HashSet<PersonData>();
+    public Persons all() {
+        Persons persons = new Persons();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
 
         for (WebElement element: elements){
