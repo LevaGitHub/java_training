@@ -1,18 +1,12 @@
 package ru.stqa.addressbok.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
 
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PersonModificationTests extends TestBase {
@@ -50,9 +44,6 @@ public class PersonModificationTests extends TestBase {
         Persons after = app.person().all();
         Assert.assertEquals(after.size(), before.size());
         assertThat(after, equalTo(before.withOut(modifiedPerson).withAdded(person)));
-//        before.remove(modifiedPerson);
-//        before.add(person);
-//        Assert.assertEquals(before, after);
     }
 
 }

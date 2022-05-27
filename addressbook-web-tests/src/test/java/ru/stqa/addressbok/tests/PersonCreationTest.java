@@ -1,13 +1,8 @@
 package ru.stqa.addressbok.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
-
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -32,11 +27,6 @@ public class PersonCreationTest extends TestBase{
         assertEquals(after.size(), before.size() + 1);
         assertThat(after, equalTo(
                 before.withAdded(person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
-
-//        person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
-//        before.add(person);
-//        assertEquals(before, after);
     }
-
 
 }

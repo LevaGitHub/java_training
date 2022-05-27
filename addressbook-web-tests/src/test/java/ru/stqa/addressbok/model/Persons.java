@@ -1,7 +1,6 @@
 package ru.stqa.addressbok.model;
 
 import com.google.common.collect.ForwardingSet;
-import ru.stqa.addressbok.tests.PersonDeletionTests;
 
 import java.util.HashSet;
 import java.util.Set;
