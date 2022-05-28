@@ -3,6 +3,7 @@ package ru.stqa.addressbok.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import ru.stqa.addressbok.model.Groups;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
 
@@ -57,12 +58,14 @@ public class PersonHelper extends HelperBase {
         initPersonCreation();
         fillPersonData(person);
         submitPersonCreation();
+        personCache = null;
     }
 
     public void modify(PersonData person) {
         initPersonModification(String.valueOf(person.getId()));
         fillPersonData(person);
         submitPersonModification();
+        personCache = null;
 
     }
 
@@ -70,6 +73,7 @@ public class PersonHelper extends HelperBase {
         selectById(person.getId());
         deleteSelectedPerson();
         confirmDeletePerson();
+        personCache = null;
     }
 
     public boolean isThereAPerson() {
@@ -80,9 +84,13 @@ public class PersonHelper extends HelperBase {
         return wd.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("id");
     }
 
+    private Persons personCache = null;
 
     public Persons all() {
-        Persons persons = new Persons();
+        if (personCache != null){
+            return new Persons(personCache);
+        }
+        personCache = new Persons();
         List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
 
         for (WebElement element: elements){
@@ -90,8 +98,8 @@ public class PersonHelper extends HelperBase {
             String lastName = element.findElements(By.cssSelector("td")).get(1).getText();
             String firstName = element.findElements(By.cssSelector("td")).get(2).getText();
             PersonData person = new PersonData().withId(id).withLastName(lastName).withFirstName(firstName);
-            persons.add(person);
+            personCache.add(person);
         }
-        return persons;
+        return new Persons(personCache);
     }
 }
