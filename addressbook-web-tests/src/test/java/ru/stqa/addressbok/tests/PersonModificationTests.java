@@ -41,8 +41,8 @@ public class PersonModificationTests extends TestBase {
                 .withMail("test@test.testM");
         app.person().modify(person);
         app.goTo().homePage();
+        assertThat(app.person().count(), equalTo(before.size()));
         Persons after = app.person().all();
-        Assert.assertEquals(after.size(), before.size());
         assertThat(after, equalTo(before.withOut(modifiedPerson).withAdded(person)));
     }
 

@@ -23,8 +23,8 @@ public class PersonCreationTest extends TestBase{
                 .withMail("test@test.test");
         app.person().createPerson(person);
         app.goTo().homePage();
+        assertThat(app.person().count(), equalTo(before.size() + 1));
         Persons after = app.person().all();
-        assertEquals(after.size(), before.size() + 1);
         assertThat(after, equalTo(
                 before.withAdded(person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }

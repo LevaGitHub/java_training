@@ -80,6 +80,10 @@ public class PersonHelper extends HelperBase {
         return isElementPresent(By.xpath("//input[@name='selected[]' and @type='checkbox']"));
     }
 
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
     public String getPersonStringId() {
         return wd.findElement(By.xpath("//input[@name='selected[]' and @type='checkbox']")).getAttribute("id");
     }

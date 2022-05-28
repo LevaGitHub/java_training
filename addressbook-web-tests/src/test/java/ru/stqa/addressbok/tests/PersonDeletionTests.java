@@ -5,6 +5,7 @@ import org.testng.annotations.*;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
@@ -31,8 +32,8 @@ public class PersonDeletionTests extends TestBase{
         PersonData deletedPerson = before.iterator().next();
         app.person().delete(deletedPerson);
         app.goTo().homePage();
+        assertThat(app.person().count(), equalTo(before.size() - 1));
         Persons after = app.person().all();
-        assertEquals(after.size(), before.size() -1);
         assertThat(after, CoreMatchers.equalTo(before.withOut(deletedPerson)));
     }
 
