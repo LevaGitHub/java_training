@@ -1,6 +1,5 @@
 package ru.stqa.addressbok.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.addressbok.model.PersonData;
@@ -21,7 +20,7 @@ public class PersonModificationTests extends TestBase {
                     .withLastName("LastName")
                     .withAddress("Address")
                     .withPhone("12345789")
-                    .withMail("test@test.test"));
+                    .withEmail("test@test.test"));
             app.goTo().homePage();
         }
     }
@@ -38,7 +37,7 @@ public class PersonModificationTests extends TestBase {
                 .withLastName("LastNameM")
                 .withAddress("AddressM")
                 .withPhone("123457890")
-                .withMail("test@test.testM");
+                .withEmail("test@test.testM");
         app.person().modify(person);
         app.goTo().homePage();
         assertThat(app.person().count(), equalTo(before.size()));

@@ -7,7 +7,6 @@ import ru.stqa.addressbok.model.Persons;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.*;
 
 public class PersonDeletionTests extends TestBase{
 
@@ -21,7 +20,7 @@ public class PersonDeletionTests extends TestBase{
                     .withLastName("LastName")
                     .withAddress("Address")
                     .withPhone("12345789")
-                    .withMail("test@test.test"));
+                    .withEmail("test@test.test"));
             app.goTo().homePage();
         }
     }

@@ -6,7 +6,6 @@ import ru.stqa.addressbok.model.Persons;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.*;
 
 public class PersonCreationTest extends TestBase{
 
@@ -20,7 +19,7 @@ public class PersonCreationTest extends TestBase{
                 .withLastName("LastName")
                 .withAddress("Address")
                 .withPhone("12345789")
-                .withMail("test@test.test");
+                .withEmail("test@test.test");
         app.person().createPerson(person);
         app.goTo().homePage();
         assertThat(app.person().count(), equalTo(before.size() + 1));

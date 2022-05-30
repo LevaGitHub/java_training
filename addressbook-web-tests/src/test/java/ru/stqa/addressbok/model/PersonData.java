@@ -7,8 +7,16 @@ public class PersonData {
     private String middleName;
     private String lastName;
     private String address;
-    private String phone;
-    private String mail;
+    private String homePhone;
+    private String mobilePhone;
+    private String workPhone;
+    private String phone2;
+    private String allPhones;
+    private String email;
+    private String email2;
+    private String email3;
+    private String allEmails;
+
 
     public int getId() {
         return id;
@@ -30,12 +38,40 @@ public class PersonData {
         return address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getHomePhone() {return homePhone; }
+
+    public String getMobilePhone() {return mobilePhone; }
+
+    public String getWorkPhone() {return workPhone; }
+
+    public String getPhone2() {return phone2; }
+
+    public void setPhone2(String phone2) { this.phone2 = phone2; }
+
+    public String getAllPhones() {return allPhones; }
+
+    public PersonData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEmail2() {return email2; }
+
+    public void setEmail2(String email2) { this.email2 = email2; }
+
+    public String getEmail3() { return email3; }
+
+    public void setEmail3(String email3) { this.email3 = email3;}
+
+    public String getAllEmails() {return allEmails; }
+
+    public PersonData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
     }
 
     public PersonData withId(int id) {
@@ -64,15 +100,38 @@ public class PersonData {
     }
 
     public PersonData withPhone(String phone) {
-        this.phone = phone;
+        this.homePhone = phone;
         return this;
     }
 
-    public PersonData withMail(String mail) {
-        this.mail = mail;
+    public PersonData withMobilePhone(String mobile) {
+        this.mobilePhone = mobile;
+        return this;
+    }
+    public PersonData withWork(String work) {
+        this.workPhone = work;
         return this;
     }
 
+    public PersonData withPhone2(String phone2) {
+        this.phone2 = phone2;
+        return this;
+    }
+
+    public PersonData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public PersonData withEmail2(String mail2) {
+        this.email2 = mail2;
+        return this;
+    }
+
+    public PersonData withEmail3(String mail3) {
+        this.email3 = mail3;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,4 +152,6 @@ public class PersonData {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
+
+
 }
