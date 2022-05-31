@@ -1,5 +1,7 @@
 package ru.stqa.addressbok.model;
 
+import java.io.File;
+
 public class PersonData {
 
     private int id=Integer.MAX_VALUE;;
@@ -16,6 +18,17 @@ public class PersonData {
     private String email2;
     private String email3;
     private String allEmails;
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public PersonData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
+    private File photo;
 
 
     public int getId() {

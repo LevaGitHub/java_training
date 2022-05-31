@@ -24,6 +24,7 @@ public class PersonHelper extends HelperBase {
         type(By.name("address"), personData.getAddress());
         type(By.name("home"), personData.getHomePhone());
         type(By.name("email"), personData.getEmail());
+        attach(By.name("photo"), personData.getPhoto());
     }
 
     public void initPersonCreation() {
