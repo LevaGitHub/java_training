@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "FirstName 0",
+    "middleName": "MiddleName 0",
+    "lastName": "LastName 0",
+    "address": "Address 0",
+    "homePhone": "123457890",
+    "email": "test0@test.test"
+  },
+  {
+    "firstName": "FirstName 1",
+    "middleName": "MiddleName 1",
+    "lastName": "LastName 1",
+    "address": "Address 1",
+    "homePhone": "123457891",
+    "email": "test1@test.test"
+  },
+  {
+    "firstName": "FirstName 2",
+    "middleName": "MiddleName 2",
+    "lastName": "LastName 2",
+    "address": "Address 2",
+    "homePhone": "123457892",
+    "email": "test2@test.test"
+  }
+]
