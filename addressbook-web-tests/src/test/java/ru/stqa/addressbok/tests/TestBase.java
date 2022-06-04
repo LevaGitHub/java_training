@@ -12,7 +12,8 @@ import ru.stqa.addressbok.model.PersonData;
 
 public class TestBase {
 
-    protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+    protected static final ApplicationManager app
+            = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
     private WebDriver wd;
 
     @BeforeSuite(alwaysRun = true)

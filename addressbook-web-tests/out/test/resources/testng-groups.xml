@@ -8,10 +8,4 @@
             <class name="ru.stqa.addressbok.tests.GroupDeletionTests" />
         </classes>
     </test>
-
-    <test name="Persons">
-        <classes>
-            <class name="ru.stqa.addressbok.tests.PersonCreationTest" />
-        </classes>
-    </test>
 </suite>
