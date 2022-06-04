@@ -22,33 +22,34 @@ public class PersonCreationTest extends TestBase{
 
     @DataProvider
     public Iterator<Object[]> validPersonsFromXml() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/persons.xml")));
-        String xml = "";
-        String line = reader.readLine();
-        while (line != null){
-            xml += line;
-            line = reader.readLine();
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/persons.xml")))){
+            String xml = "";
+            String line = reader.readLine();
+            while (line != null){
+                xml += line;
+                line = reader.readLine();
+            }
+            XStream xstream = new XStream();
+            xstream.allowTypes(new Class[] {PersonData.class});
+            xstream.processAnnotations(PersonData.class);
+            List<PersonData> persons = (List<PersonData>) xstream.fromXML(xml);
+            return persons.stream().map((p) -> new Object[] {p}).collect(Collectors.toList()).iterator();
         }
-        XStream xstream = new XStream();
-        xstream.allowTypes(new Class[] {PersonData.class});
-        xstream.processAnnotations(PersonData.class);
-        List<PersonData> persons = (List<PersonData>) xstream.fromXML(xml);
-        return persons.stream().map((p) -> new Object[] {p}).collect(Collectors.toList()).iterator();
     }
 
     @DataProvider
     public Iterator<Object[]> validPersonsFromJson() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/persons.json")));
-        String json = "";
-        String line = reader.readLine();
-        while (line != null){
-            json += line;
-            line = reader.readLine();
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/persons.json")))) {
+            String json = "";
+            String line = reader.readLine();
+            while (line != null){
+                json += line;
+                line = reader.readLine();
+            }
+            Gson gson = new Gson();
+            List<PersonData> persons = gson.fromJson(json, new TypeToken<List<PersonData>>(){}.getType());   //List<PersonData>.class
+            return persons.stream().map((p) -> new Object[] {p}).collect(Collectors.toList()).iterator();
         }
-        Gson gson = new Gson();
-        List<PersonData> persons = gson.fromJson(json, new TypeToken<List<PersonData>>(){}.getType());   //List<PersonData>.class
-        return persons.stream().map((p) -> new Object[] {p}).collect(Collectors.toList()).iterator();
-
     }
 
     @Test(dataProvider = "validPersonsFromJson")

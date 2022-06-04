@@ -54,18 +54,18 @@ public class PersonDataGenerator {
     private void saveAsJson(List<PersonData> persons, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(persons);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<PersonData> persons, File file) throws IOException {
         XStream xstream = new XStream();
         xstream.processAnnotations(PersonData.class);
         String xml = xstream.toXML(persons);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try(Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private List<PersonData> generatePerson(int count) {
