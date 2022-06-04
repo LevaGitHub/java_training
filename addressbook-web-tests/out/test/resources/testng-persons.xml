@@ -4,6 +4,9 @@
     <test name="Persons">
         <classes>
             <class name="ru.stqa.addressbok.tests.PersonCreationTest" />
+            <class name="ru.stqa.addressbok.tests.PersonModificationTests" />
+            <class name="ru.stqa.addressbok.tests.PersonDeletionTests" />
+            <class name="ru.stqa.addressbok.tests.PersonDataTest" />
         </classes>
     </test>
 </suite>

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.openqa.selenium.json.TypeToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 import ru.stqa.addressbok.model.GroupData;
 import ru.stqa.addressbok.model.Groups;
@@ -18,6 +20,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTest extends TestBase{
+    Logger logger = LoggerFactory.getLogger(GroupCreationTest.class);
+
 
   @DataProvider
   public Iterator<Object[]> validGroupsFromXml() throws IOException {
@@ -54,7 +58,6 @@ public class GroupCreationTest extends TestBase{
 
   @Test(dataProvider = "validGroupsFromJson")
   public void testGroupCreation(GroupData group) throws Exception {
-
       app.goTo().groupPage();
       Groups before = app.group().all();
       app.group().create(group);
