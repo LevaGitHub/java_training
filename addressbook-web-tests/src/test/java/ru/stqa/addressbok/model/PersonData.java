@@ -3,44 +3,98 @@ package ru.stqa.addressbok.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 @XStreamAlias("persons")
 public class PersonData {
+
+    @Id
     @XStreamOmitField()
-    private int id=Integer.MAX_VALUE;;
+    @Column(name="id")
+    private int id=Integer.MAX_VALUE;
+
     @Expose
+    @Column(name="firstname")
     private String firstName;
+
     @Expose
+    @Column(name="middlename")
     private String middleName;
+
     @Expose
+    @Column(name="lastname")
     private String lastName;
+
+    @Transient
+    private String group;
+
     @Expose
+    @Column(name="address")
+    @Type(type="text")
     private String address;
+
     @Expose
+    @Column(name="home")
+    @Type(type="text")
     private String homePhone;
+
+    @Column(name="mobile")
+    @Type(type="text")
     private String mobilePhone;
+
+    @Column(name="work")
+    @Type(type="text")
     private String workPhone;
+
+    @Column(name="phone2")
+    @Type(type="text")
     private String phone2;
+
+    @Transient
     private String allPhones;
+
     @Expose
+    @Column(name="email")
+    @Type(type="text")
     private String email;
+
+    @Override
+    public String toString() {
+        return "PersonData{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
+
+    @Column(name="email2")
+    @Type(type="text")
     private String email2;
+
+    @Column(name="email3")
+    @Type(type="text")
     private String email3;
+
+    @Transient
     private String allEmails;
 
+    @Column(name="photo")
+    @Type(type="text")
+    private String photo;
+
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public PersonData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
-
-    private File photo;
-
 
     public int getId() {
         return id;
