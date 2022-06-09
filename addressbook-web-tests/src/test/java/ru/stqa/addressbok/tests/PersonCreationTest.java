@@ -55,11 +55,11 @@ public class PersonCreationTest extends TestBase{
     @Test(dataProvider = "validPersonsFromJson")
     public void testPersonCreation(PersonData person) throws Exception {
         app.goTo().homePage();
-        Persons before = app.person().all();
+        Persons before = app.db().persons();
         app.person().createPerson(person);
         app.goTo().homePage();
         assertThat(app.person().count(), equalTo(before.size() + 1));
-        Persons after = app.person().all();
+        Persons after = app.db().persons();
         assertThat(after, equalTo(
                 before.withAdded(person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }

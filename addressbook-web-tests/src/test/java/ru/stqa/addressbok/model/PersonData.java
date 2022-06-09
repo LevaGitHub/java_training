@@ -87,6 +87,34 @@ public class PersonData {
     @Type(type="text")
     private String photo;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonData that = (PersonData) o;
+
+        if (id != that.id) return false;
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (middleName != null ? !middleName.equals(that.middleName) : that.middleName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+        return email != null ? email.equals(that.email) : that.email == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        return result;
+    }
+
     public File getPhoto() {
         return new File(photo);
     }
@@ -209,26 +237,6 @@ public class PersonData {
     public PersonData withEmail3(String mail3) {
         this.email3 = mail3;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PersonData that = (PersonData) o;
-
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        return result;
     }
 
 

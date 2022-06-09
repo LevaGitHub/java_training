@@ -1,5 +1,6 @@
 package ru.stqa.addressbok.appmanager;
 
+import org.hibernate.boot.MetadataSources;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,7 +25,12 @@ public class PersonHelper extends HelperBase {
         type(By.name("address"), personData.getAddress());
         type(By.name("home"), personData.getHomePhone());
         type(By.name("email"), personData.getEmail());
-        attach(By.name("photo"), personData.getPhoto());
+        try {
+            attach(By.name("photo"), personData.getPhoto());
+        }
+        catch (NullPointerException e) {
+        }
+
     }
 
     public void initPersonCreation() {

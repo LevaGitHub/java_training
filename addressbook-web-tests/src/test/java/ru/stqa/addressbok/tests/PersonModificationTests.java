@@ -12,8 +12,8 @@ public class PersonModificationTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
-        app.goTo().homePage();
-        if (app.person().all().size() == 0){
+        if (app.db().persons().size() == 0){
+            app.goTo().homePage();
             app.person().createPerson(new PersonData()
                     .withFirstName("FirstName")
                     .withMiddleName("MiddleName")
@@ -27,7 +27,7 @@ public class PersonModificationTests extends TestBase {
 
     @Test
     public void testPersonModification(){
-        Persons before = app.person().all();
+        Persons before = app.db().persons();
         PersonData modifiedPerson = before.iterator().next();
         app.person().selectById(modifiedPerson.getId());
         PersonData person = new PersonData()
@@ -41,7 +41,7 @@ public class PersonModificationTests extends TestBase {
         app.person().modify(person);
         app.goTo().homePage();
         assertThat(app.person().count(), equalTo(before.size()));
-        Persons after = app.person().all();
+        Persons after = app.db().persons();
         assertThat(after, equalTo(before.withOut(modifiedPerson).withAdded(person)));
     }
 
