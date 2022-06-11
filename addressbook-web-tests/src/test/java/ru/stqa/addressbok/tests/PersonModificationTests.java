@@ -43,6 +43,7 @@ public class PersonModificationTests extends TestBase {
         assertThat(app.person().count(), equalTo(before.size()));
         Persons after = app.db().persons();
         assertThat(after, equalTo(before.withOut(modifiedPerson).withAdded(person)));
+        verifyPersonListInUI();
     }
 
 }

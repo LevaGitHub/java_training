@@ -62,6 +62,7 @@ public class PersonCreationTest extends TestBase{
         Persons after = app.db().persons();
         assertThat(after, equalTo(
                 before.withAdded(person.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
+        verifyPersonListInUI();
     }
 
 }

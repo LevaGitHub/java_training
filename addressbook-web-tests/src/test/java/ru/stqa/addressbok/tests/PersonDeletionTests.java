@@ -35,6 +35,7 @@ public class PersonDeletionTests extends TestBase{
         assertThat(app.person().count(), equalTo(before.size() - 1));
         Persons after = app.db().persons();
         assertThat(after, CoreMatchers.equalTo(before.withOut(deletedPerson)));
+        verifyPersonListInUI();
     }
 
 }
