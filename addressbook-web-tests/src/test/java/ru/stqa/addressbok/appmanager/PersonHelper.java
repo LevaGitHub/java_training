@@ -219,4 +219,23 @@ public class PersonHelper extends HelperBase {
         }
         return null;
     }
+
+    public PersonData findPersonToRemoveGroup(Persons person){
+        Iterator<PersonData> person_iter = person.iterator();
+        PersonData modifiedPerson = person_iter.next();  //
+        for (int i=0; i < person.size(); i++) {
+            if (modifiedPerson.getGroups().size() > 0) {
+                return modifiedPerson;
+            } else {
+                modifiedPerson = person_iter.next();
+            }
+        }
+        return null;
+    }
+
+    public void removePersonFromGroup(PersonData person, GroupData groupToRemove) {
+        selectGroupFilter(groupToRemove.getName());
+        selectById(person.getId());
+        wd.findElement(By.name("remove")).click();
+    }
 }
