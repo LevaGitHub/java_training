@@ -1,11 +1,9 @@
 package ru.stqa.addressbok.appmanager;
 
-import org.hibernate.boot.MetadataSources;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.stqa.addressbok.model.GroupData;
 import ru.stqa.addressbok.model.Groups;
 import ru.stqa.addressbok.model.PersonData;
@@ -196,7 +194,7 @@ public class PersonHelper extends HelperBase {
         return null;
     }
 
-    public GroupData get_available_group(PersonData modifiedPerson, Groups groups) {
+    public GroupData getAvailableGroup(PersonData modifiedPerson, Groups groups) {
         Iterator<GroupData> iter = groups.iterator();
         for (int i = 0; i < groups.size(); i++){
             GroupData group_to_add = iter.next();
@@ -204,6 +202,19 @@ public class PersonHelper extends HelperBase {
                 return group_to_add;
             } else {
                 System.out.println(modifiedPerson.getLastName() + " " + group_to_add.getName());
+            }
+        }
+        return null;
+    }
+
+    public PersonData findPersonToAddGroup(Persons person, int groupsCount){
+        Iterator<PersonData> person_iter = person.iterator();
+        PersonData modifiedPerson = person_iter.next();  //
+        for (int i=0; i < person.size(); i++) {
+            if (modifiedPerson.getGroups().size() < groupsCount) {
+                return modifiedPerson;
+            } else {
+                modifiedPerson = person_iter.next();
             }
         }
         return null;

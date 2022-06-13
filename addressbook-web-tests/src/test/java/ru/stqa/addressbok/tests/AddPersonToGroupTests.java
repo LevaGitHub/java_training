@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class addPersonToGroupTests extends TestBase {
+public class AddPersonToGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
@@ -20,7 +20,6 @@ public class addPersonToGroupTests extends TestBase {
         if (app.db().groups().size() == 0){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("Name"));
-            return;
         }
         //Если нет пользователей
         if (app.db().persons().size()==0) {
@@ -33,7 +32,6 @@ public class addPersonToGroupTests extends TestBase {
                     .withPhone("12345789")
                     .withEmail("test@test.test"));
             app.goTo().homePage();
-            return;
         }
         // Если все пользователи уже добавлены во все группы
         int groupsCount = app.db().groups().size();
@@ -56,34 +54,16 @@ public class addPersonToGroupTests extends TestBase {
     @Test
     public void testAddPersonToGroup() throws Exception {
         Groups groups = app.db().groups();
+        Persons before = app.db().persons();
         app.goTo().homePage();
         app.person().selectGroupFilter("[all]");
-        Persons before = app.db().persons();
-
-        GroupData group_to_add = groups.iterator().next();  // Без значений по умолчанию не билдится
-        int modifiedPersonId = 0;   // Без значений по умолчанию не билдится variable ... might not have been initialized
-        // т.к. конечное определение переменных в условии ниже, которое по логике всегда должно выплоняться,
-        // но java так не считает. Гарантия выполнения условия - выполнение предусловия на создание группы если все
-        // контакты уже состоят в группах
-
-        Iterator<PersonData> person_iter = before.iterator();
-        PersonData modifiedPerson = person_iter.next();  //
-        for (int i=0; i < before.size(); i++) {
-            if (modifiedPerson.getGroups().size() < groups.size()) {
-                group_to_add = app.person().get_available_group(modifiedPerson, groups);
-                modifiedPersonId = modifiedPerson.getId();
-                break;
-            } else {
-                modifiedPerson = person_iter.next();
-            }
-        }
-
-        app.person().selectById(modifiedPerson.getId());
-        app.person().addPersonToGroup(group_to_add);
+        PersonData personToAddGroup = app.person().findPersonToAddGroup(before, groups.size());
+        GroupData groupToAdd = app.person().getAvailableGroup(personToAddGroup, groups);
+        app.person().selectById(personToAddGroup.getId());
+        app.person().addPersonToGroup(groupToAdd);
         app.goTo().homePage();
-        Persons after = app.db().persons();
-        PersonData modifiedPersonAfterAddGroup = app.person().getPersonFromListById(after, modifiedPersonId);
-        Assert.assertTrue(modifiedPersonAfterAddGroup.getGroups().contains(group_to_add));
+        Persons after = app.db().personsById(personToAddGroup.getId());
+        Assert.assertTrue(after.iterator().next().getGroups().contains(groupToAdd));
         verifyPersonListInUI();
     }
 
