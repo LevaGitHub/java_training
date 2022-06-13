@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.*;
+import ru.stqa.addressbok.model.Groups;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
 
@@ -54,6 +55,7 @@ public class PersonCreationTest extends TestBase{
 
     @Test(dataProvider = "validPersonsFromJson")
     public void testPersonCreation(PersonData person) throws Exception {
+//        Groups groups = app.db().groups();
         app.goTo().homePage();
         Persons before = app.db().persons();
         app.person().createPerson(person);

@@ -4,9 +4,14 @@ import org.hibernate.boot.MetadataSources;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import ru.stqa.addressbok.model.GroupData;
+import ru.stqa.addressbok.model.Groups;
 import ru.stqa.addressbok.model.PersonData;
 import ru.stqa.addressbok.model.Persons;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class PersonHelper extends HelperBase {
@@ -30,7 +35,14 @@ public class PersonHelper extends HelperBase {
         }
         catch (NullPointerException e) {
         }
-
+//        if (creation){
+//            if (personData.getGroups().size() >0 ) {
+//                Assert.assertTrue(personData.getGroups().size() == 1);
+//                new Select(wd.findElement(By.name("new_group")))
+//                        .selectByVisibleText(personData.getGroups().iterator().next().getName());
+//            }
+//            else{Assert.assertFalse(isElementPresent(By.name("new_group")));}
+//        }
     }
 
     public void initPersonCreation() {
@@ -41,6 +53,20 @@ public class PersonHelper extends HelperBase {
         wd.findElement(By.cssSelector("input[value='"+ id +"']")).click();
         }
 
+    public void selectGroupFilter(String group_name){
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group_name);
+    }
+
+    public void selectPersonGroup(String group_name){
+        wd.findElement(By.name("to_group")).click();
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group_name);
+    }
+
+    public void addPersonToGroup(GroupData group){
+        selectPersonGroup(group.getName());
+        wd.findElement(By.name("add")).click();
+    }
 
     public void deleteSelectedPerson() {
         click(By.xpath("//input[@value='Delete']"));
@@ -159,5 +185,27 @@ public class PersonHelper extends HelperBase {
 //        wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
 //        wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
 //        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+    }
+
+    public PersonData getPersonFromListById(Persons persons, int personId) {
+        Iterator<PersonData> iter = persons.iterator();
+        for (int i =0; i< persons.size(); i++) {
+            PersonData person = iter.next();
+            if (person.getId() == personId) return person;
+        }
+        return null;
+    }
+
+    public GroupData get_available_group(PersonData modifiedPerson, Groups groups) {
+        Iterator<GroupData> iter = groups.iterator();
+        for (int i = 0; i < groups.size(); i++){
+            GroupData group_to_add = iter.next();
+            if (!(modifiedPerson.getGroups().contains(group_to_add))) {
+                return group_to_add;
+            } else {
+                System.out.println(modifiedPerson.getLastName() + " " + group_to_add.getName());
+            }
+        }
+        return null;
     }
 }
