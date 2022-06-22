@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import ru.stqa.pft.mantis.tests.SoapTests;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +26,7 @@ public class ApplicationManager {
     private UserHelper user;
     private DbHelper dbHelper;
     private SessionHelper session;
+    private SoapHelper SoapHelper;
 
     public ApplicationManager(String browser)  {
         this.browser = browser;
@@ -104,6 +106,13 @@ public class ApplicationManager {
             session = new SessionHelper(this);
         }
         return session;
+    }
+
+    public SoapHelper soap() {
+        if (SoapHelper == null) {
+            SoapHelper = new SoapHelper(this);
+        }
+        return SoapHelper;
     }
 
     public WebDriver getDriver() {
